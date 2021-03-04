@@ -22,5 +22,5 @@ I’ve looked through different code on GitHub to see various ways members of th
 
 • Option 4: Maybe? Danielle created null networks for the EEG Motif study (Danielle_motifcode.m). To the best of my understanding of the MOTIF code, this does NOT calculate graph theory outcomes and I could not figure out how to directly modify this code for the global efficiency analysis, but I tried to recreate the idea of it in Option 1. I’m included it here in case it sparks ideas from anyone.
 
-Test files include the clean EEG file, as well as a wPLI matrix if you just want to focus on the global efficiency data.
+Test files include the clean EEG file, as well as a wPLI matrix if you just want to focus on the global efficiency data. Both files have given global efficiency values above 1.
 
