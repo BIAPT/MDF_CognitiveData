@@ -1,2 +1,0 @@
-raw_data_path=/Users/elizabethteel/Desktop/Research/Projects/Consciousness/Subject Files
-output_path=/Users/elizabethteel/Desktop/Consciousness Test
