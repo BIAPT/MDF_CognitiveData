@@ -1,0 +1,25 @@
+MDF_CognitiveData Read Me
+
+The PowerPoint file from my Work in Progress Seminar is attached. This provides basic background on all steps I’ve taken prior to the seminar, and details the various different functions and parameters I’ve adjusted in trying to fix this global efficiency issue.
+
+Steps I’ve taken since the Work in Progress Seminar
+
+• Re-run the analysis without the null networks: When only looking at the global efficiency values for my graph alone (no null networks were created/no normalization), all global efficiency values were below 1 (typically, values were around 0.6-0.8). This suggests the problem is within the null network code, and not other areas.
+
+• Re-run the analysis will the null networks at a high, constant threshold (0.65): When normalizing the global efficiency values to null networks generated with a very high, consistent threshold of 65%, global efficiency values above 1 were once again observed. This suggests that the null network issue is not a result of isolated nodes.
+
+• Re-run the data from the beginning: Although not likely to be the issue, two points that was raised during the work in progress seminar were related to: 1) eliminating non-scale channels from the dataset entirely in EEGlab/MATLAB instead of filtering them out at a later step and 2) reducing wPLI matrices done to 85x85 matrices, should that all channels in each matrix were available for all participants in the study. For a small number of files where global efficiency values were greater than 1, I re-ran the data from start to finish. I reloaded the data to EEGlab, added in channel locations, and epoched the data. I did NOT remove scalp channels from the file, as I did on the original analysis. I then re-ran the wPLI, threshold sweep, and graph theory analysis code using the filter_nonscalp.m code to skip non-scalp channels. In addition I did NOT reduce the matrices down to 85x85, so all available channels for every participant were analyzed. Global efficiency values were still above 1, suggesting that the removal of channels (both the non-scalp electrodes in EEGlab and the 85x85 channels in the code) are not the cause of the abnormal values.
+
+Multiple Methods of Calculating Global Efficiency
+
+I’ve looked through different code on GitHub to see various ways members of the lab have calculated global efficiency outcomes. I have adapted/modified several different iterations of this code (unmodifed code is in the "Original Code" folder), without success. I have included the three different “options” of global efficiency code that I have tried in the “step_3b_graphtheoryanalysis_liz_clean.m” file. Please NOTE: I ran each option in its own separate .m file, but for the purpose of this code review I have included them all in the same file as Option 1, Option 2, and Option 3 for ease of comparison.
+
+• Option 1: This is based on Stefanie’s code from her postdoc (find_network_properties.m), but was modified to: 1) add in multiple random networks and 2) normalize my graph against each random network generated (n=10 for now), then average across all values. For example. my graph was normalized to null network 1, then null network 2, … null network 10, then those 10 normalized global efficiency values were averaged for a final, normalized global efficiency value.
+
+• Option 2: This is based on Danielle’s code from the Consciousness-Graph project (danielle_graphtheoryanalysis.m). This code places all the null networks into a 3D matrix, squeezes the matrix, then normalizes the global efficiency value of my graph against the squeezed data. Variable names were changed from Danielle’s code, but otherwise no modifications were made. This is also the code I tested various different null network functions/parameters from Brain Connectivity Toolbox, which are detailed during my work in progress PowerPoint.
+
+• Option 3: This is code that is based off of functions Yacine created and I found in the NeuroAlgo folder (also included here: binary_global_efficiency.m). Similar to option 2, this code places all the null networks into a 3D matrix, which Yacine actually wrote after I could not figure it out how to create this loop on my own. The 3D matrix is then fed into the global efficency function that Yacine created, which calculates path length, global efficiency, normalized path length, and normalized global efficiency in a single line of code.
+
+• Option 4: Maybe? Danielle created null networks for the EEG Motif study (Danielle_motifcode.m). To the best of my understanding of the MOTIF code, this does NOT calculate graph theory outcomes and I could not figure out how to directly modify this code for the global efficiency analysis, but I tried to recreate the idea of it in Option 1. I’m included it here in case it sparks ideas from anyone.
+
+Test files are for participant MDFA06 (p=3) during the Visual Object Learning Test (t=2) at all 8 time points (s=1:8). I've attached the clean EEG files (.set, .fdt, and .mat) if you want to run the code from the beginning, but I also uploaded the wPLI matrice files (wpli.mat) if you want to focus on the global efficiency code only.
